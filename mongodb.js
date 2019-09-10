@@ -114,7 +114,7 @@ const Guild = new Schema({
 
     sobre: {
         type: String,
-        default: ''
+        default: '**<:EMOJI2:615343200151797782> | O servidor não possui um sobre. (Use l!!servidor para setar o sobre.)**'
 
     },
 

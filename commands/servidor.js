@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
-const database = require('../mongodb.js');
 
-module.exports.run = async ({client, message, args, server, docDB}) => {
+module.exports.run = async ({message, args, user, server}) => {
     
     message.delete().catch(e => {})
 
@@ -16,13 +15,13 @@ module.exports.run = async ({client, message, args, server, docDB}) => {
     }
 
         if (args === undefined || args.length === 0) {
-        message.channel.send(`**${emj} | Comando errado, use: "${prefix}servidor <sobre : dellsobre : info>".**`);
+        message.channel.send(`**${emj} | Comando errado, use: "${prefix}servidor <addsobre : dellsobre>".**`);
         return;
     }
 
-    if (args[0] === 'sobre') {
+    if (args[0] === 'addsobre') {
 
-        let MSG = args.join(' ');
+        let MSG = args.slice(1).join(' ');
         if (!MSG) {
             return message.channel.send(`**${emj} | Insira uma mensagem para que eu possa seta-la como o sobre do servidor.**`)
         }
@@ -30,13 +29,16 @@ module.exports.run = async ({client, message, args, server, docDB}) => {
         server.sobre = MSG;
         server.save();
 
+        return message.channel.send(`**${emj2} | O sobre de sua guild foi setado. (${MSG})**`)
+
     }
 
     if (args[0] === 'dellsobre') {
-        
-    }
 
-    if (args[0] === 'info') {
+        server.sobre = '**<:EMOJI2:615343200151797782> | O servidor não possui um sobre. (Use l!!servidor para setar o sobre.)**';
+        server.save();
+
+        return message.channel.send(`**${emj2} | O sobre do servidor foi deletado e alterado para o padrão.**`)
         
     }
 
