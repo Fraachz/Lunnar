@@ -102,7 +102,8 @@ module.exports.run = async({message, args, user, server}) => {
         }
 
         server.welcome = true;
-        
+        server.welcomeRoles = true;
+
         server.welcomeOn = '**<:aon:572142761336111108> **(**`Ativado`**)**';
         server.welcomeRole = role.id;
 

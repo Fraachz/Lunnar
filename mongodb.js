@@ -142,6 +142,11 @@ const Guild = new Schema({
         default: "**<:EMOJI2:615343200151797782> | O canal de entrada ainda não foi setado.**"
     },
 
+    welcomeRoles: {
+        type: Boolean,
+        default: false
+    },
+
     welcomeRole: {
         type: String,
         default: "**<:EMOJI2:615343200151797782> | O cargo de entrada ainda não foi setado.**"
