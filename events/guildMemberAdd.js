@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
 const database = require('../mongodb.js');
+const { docDB } = require('../index.js')
 
-module.exports = async (client, member, docDB) => {
+module.exports = async (client, member) => {
 
     let server = await docDB({ type: 2, content: member.guild });
 
