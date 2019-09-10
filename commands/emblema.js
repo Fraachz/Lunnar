@@ -157,7 +157,6 @@ module.exports.run = async({client, message, args, user, server, docDB}) => {
             if (name === 'doador') {
                 
                 if (membroDB.emblemas.remove(emblema => emblema.type === 'doador')) return message.channel.send(`**${emj} | O emblema citado já foi removido do perfil do usuário.**`)
-    
                 const emblema = membroDB.emblemas.find(emblema.type === 'doador')
                 membroDB.emblemas.splice(emblema, 1)
 
@@ -170,7 +169,6 @@ module.exports.run = async({client, message, args, user, server, docDB}) => {
             if (name === 'amigo') {
                 
                 if (membroDB.emblemas.remove(emblema => emblema.type === 'amigo')) return message.channel.send(`**${emj} | O emblema citado já foi removido do perfil do usuário.**`)
-    
                 const emblema = membroDB.emblemas.find(emblema.type === 'amigo')
                 membroDB.emblemas.splice(emblema, 1)
 
@@ -183,7 +181,6 @@ module.exports.run = async({client, message, args, user, server, docDB}) => {
             if (name === 'staff') {
                 
                 if (membroDB.emblemas.remove(emblema => emblema.type === 'staff')) return message.channel.send(`**${emj} | O emblema citado já foi removido do perfil do usuário.**`)
-    
                 const emblema = membroDB.emblemas.find(emblema.type === 'staff')
                 membroDB.emblemas.splice(emblema, 1)
 
@@ -196,7 +193,6 @@ module.exports.run = async({client, message, args, user, server, docDB}) => {
             if (name === 'developer') {
                 
                 if (membroDB.emblemas.remove(emblema => emblema.type === 'developer')) return message.channel.send(`**${emj} | O emblema citado já foi removido do perfil do usuário.**`)
-    
                 const emblema = membroDB.emblemas.find(emblema.type === 'developer')
                 membroDB.emblemas.splice(emblema, 1)
 
@@ -222,7 +218,7 @@ module.exports.run = async({client, message, args, user, server, docDB}) => {
                 
                 emblema.type === 'dono'
     
-                const emblema = membroDB.emblemas.find(emblema.type === 'dono')
+                if (membroDB.emblemas.remove(emblema => emblema.type === 'dono')) return message.channel.send(`**${emj} | O emblema citado já foi removido do perfil do usuário.**`)
                 membroDB.emblemas.splice(emblema, 1)
 
                 membroDB.save()
