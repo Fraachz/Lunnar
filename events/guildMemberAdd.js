@@ -32,7 +32,7 @@ module.exports = async (client, member) => {
 
     }
 
-    if (role) {
+    if (server.Roles = true) {
         member.addRole(role)
     }
 }
