@@ -87,25 +87,25 @@ fs.readdir("./commands/", (err, files) => {
 
 })
 
-fs.readdir("./music/", (err, files) => {
+// fs.readdir("./music/", (err, files) => {
     
-    if (err) { console.error(err); }
+//     if (err) { console.error(err); }
 
-    let jsfile = files.filter(f => f.split('.').pop() === 'js')
-    if(jsfile.length <= 0) {
-        return console.log('[MÚSICA] Não consegui encontrar comandos.')
-    }
+//     let jsfile = files.filter(f => f.split('.').pop() === 'js')
+//     if(jsfile.length <= 0) {
+//         return console.log('[MÚSICA] Não consegui encontrar comandos.')
+//     }
 
-    console.log(jsfile)
-    jsfile.forEach((f, i) => {
+//     console.log(jsfile)
+//     jsfile.forEach((f, i) => {
         
-        let props = require(`./music/${f}`);
-        console.log(`[MÚSICA] ${f} carregado.`)
+//         let props = require(`./music/${f}`);
+//         console.log(`[MÚSICA] ${f} carregado.`)
 
-        client.commands.set(props.help.name, props);
-    })
+//         client.commands.set(props.help.name, props);
+//     })
 
-})
+// })
 
 
 fs.readdir("./events/", (err, files) => {
