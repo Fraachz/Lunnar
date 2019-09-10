@@ -1,0 +1,49 @@
+const Discord = require('discord.js');
+
+module.exports.run = async({client, message, args, user, server}) => {
+
+    message.delete();
+
+    let emj = '<:ajuda:577816377147260932>';
+    let emj2 = '<:code:570987560193753088>';
+    let emj3 = '<:suporte:564141197388546068>';
+    let emj4 = '<:info:577816535343562752>';
+    let emj5 = '<:settings:602555904474218497>';
+    let emj6 = '<:EMOJI12:619619672920162304>';
+    let emj7 = '<a:MinecraftGif:562396962523971595>';
+    let emj8 = '<:microfone:565266407978434560>';
+    let emj9 = '<:EMOJI13:619620385725480960>';
+    let emj10 = '<:cancelar:562000200650981379>';
+    let emj11 = '<:EMOJI14:619620996554686475>';
+
+    let rodape = 'Lunnar © Todos Direitos Reservados'
+
+    message.channel.send(`**${emj11} | ${message.author}, enviei meus comandos em seu privado, verifique assim que for possível.**`)
+
+    let embed = new Discord.RichEmbed()
+
+    .setTitle(`**${emj} | AJUDA**`)
+    .setDescription('**Olá, tudo bem? Espero que sim! Aqui está todas minhas informações. Caso não saiba, fui criada pelo Fraachz_#0007, em JavaScript.**\n\n**<:code:570987560193753088> | Comandos de staffs**\n**<:suporte:564141197388546068> | Meus staffs**\n\n**<:info:577816535343562752> | Administração**\n**<:settings:602555904474218497> | Configuração**\n**<:EMOJI12:619619672920162304> | Economia**\n**<a:MinecraftGif:562396962523971595> | Diversão**\n**<:microfone:565266407978434560> | Música**\n**<:EMOJI13:619620385725480960> | Dono(s)**\n\n**<:cancelar:562000200650981379> | Fechar**\n\n**Para ver mais sobre algum comando, reaja abaixo.**')
+    .setThumbnail(client.user.avatarURL)
+    .setColor(`#00B6FF`)
+    .setFooter(rodape)
+
+    message.author.send(embed).then(async msg => {
+
+        msg.react('570987560193753088') 
+        msg.react('564141197388546068') 
+        msg.react('577816535343562752') 
+        msg.react('602555904474218497') 
+        msg.react('619619672920162304')
+        msg.react('562396962523971595') 
+        msg.react('565266407978434560')
+        msg.react('619620385725480960') 
+        msg.react('562000200650981379') 
+
+    })
+
+}
+
+module.exports.help = {
+    name: 'ajuda'
+}

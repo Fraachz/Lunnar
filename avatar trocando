@@ -1,0 +1,111 @@
+    function Timer(funct, delayMs, times) {
+
+        if(times==undefined) {
+            times=-1;
+        }
+
+        if(delayMs==undefined) {
+            delayMs=10;
+        }
+
+        this.funct=funct;
+        var times=times;
+        var timesCount=0;
+        var ticks = (delayMs/10)|0;
+        var count=0;
+        Timer.instances.push(this);
+
+        this.tick = function() {
+
+            if(count>=ticks) {
+            this.funct();
+            count=0;
+            if(times>-1) {
+                timesCount++;
+                if(timesCount>=times) { 
+                    this.stop();
+                    }
+                }
+            }
+            count++; 
+        };
+
+        this.stop=function() {
+            var index = Timer.instances.indexOf(this);
+            Timer.instances.splice(index, 1);
+            };
+        }
+
+        Timer.instances=[];
+
+        Timer.ontick=function() {
+        for(var i in Timer.instances) {
+            Timer.instances[i].tick();
+        }
+        };
+
+        setInterval(Timer.ontick, 10);
+
+        function onTick() {
+            imgS()
+        }
+
+        function onTick2() {
+            stS()
+        }
+        
+        var timer = new Timer(onTick, 300000,-1);
+        var timer = new Timer(onTick2, 20000,-1);
+
+        function imgS() {
+            let img = [ 
+                "https://imgur.com/7iQSv7g.png",
+                "https://imgur.com/rhjUM8e.jpg",
+                "https://imgur.com/S6lLiBU.jpg",
+                "https://imgur.com/Gh1hmSN.jpg",
+                "https://imgur.com/TPwM68q.jpg",
+                "https://imgur.com/Rjx2r16.jpg"
+            ];
+
+            let randomImage = img[Math.floor(Math.random() * img.length)];
+            client.user.setAvatar(randomImage);
+        }
+
+        function stS() {
+        
+            let status = [
+                `Me siga no twitter! @LunnarBot [🌠]`,
+                `Atualizações Diarias [🎈]`,
+                `Meu amor, venha se divertir comigo! [❤️]`,
+                `Vamos para sua casa? Vamos se divertir muito por lá! [🔞]`,
+            ];
+            
+            let typeStatus = [
+                'STREAMING',
+                'STREAMING',
+                'STREAMING',
+                'STREAMING'
+            ]
+
+            let urlStatus = [
+                'https://www.twitch.tv/frachzin_',
+                'https://www.twitch.tv/frachzin_',
+                'https://www.twitch.tv/frachzin_',
+                'https://www.twitch.tv/frachzin_'
+            ]
+            
+            let randomStatus = status[Math.floor(Math.random() * status.length)];
+
+            let randomUrlStatus = urlStatus[Math.floor(Math.random() * urlStatus.length)];
+
+            let randomTypeStatus = typeStatus[Math.floor(Math.random() * typeStatus.length)];
+
+            client.user.setActivity(
+                randomStatus, {
+                    type: randomTypeStatus,
+                    url: randomUrlStatus
+                }
+            );
+    }
+
+});

@@ -1,0 +1,33 @@
+Necessário:
+
+* Welcome salvando id da guild -> Feito
+* Exit salvando id da guild -> Feito
+* SetPrefix salvando id da guild -> Feito
+* SetOwner salvando id do user -> Feito
+* SetManu salvando comando -> Feito
+* Sistema de blacklist -> Feito
+* Captcha salvando id da guild
+* Config salvando id da guild
+* AutoRole salvando id da guild -> Feito
+* Eval salvando id do developer -> Feito
+* Perfil salvando id do membro
+* Comandos de coins salvando id do membro
+* Loja com DataBase
+* Sistema de banco -> Feito
+* Sistema de coins -> Feito
+* Sistema de permissoes proprias -> Feito
+* Sistema de permissoes para vips -> Feito
+* Filtro anti invite
+* Sistema de logs id guild
+* Sistemas de empregos e empresas -> Feito
+
+(Por enquanto) Não Necessário:
+
+* Comandos personalizados para membros
+* Comandos personalizados para vips
+* Sistema de vips
+* Sistema de punições global
+* Sistema de empregos
+* Sistema de bom dia & boa noite
+* Sistema de Telefone
+* Sistema de alarme
