@@ -7,9 +7,9 @@ module.exports = async (client, member) => {
     let server = await docDB({type: 2, content: member.guild});
 
     let msg = server.welcomeMsg;
-    let canal = member.guild.channels.get(server.welcomeCanal);
+    let canal = member.guild.channels.get(server.exitCanal);
     if (!canal) return
-
+    
     let role = member.guild.roles.get(server.welcomeRole);
     if (!role) return;
 
@@ -21,7 +21,7 @@ module.exports = async (client, member) => {
 
     .setDescription(msg)
     .setThumbnail(member.user.avatarURL)
-    .setColor('#32FF00')
+    .setColor('#FF0000')
     .setFooter(`Lunnar © Todos Direitos Reservados`);
 
     if(embeddd) {

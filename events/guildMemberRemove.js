@@ -10,7 +10,7 @@ module.exports = async (client, member) => {
     let canal = member.guild.channels.get(server.exitCanal);
     if (!canal) return
 
-    let embeddd = server.welcomeEmbed;
+    let embeddd = server.exitEmbed;
 
     msg = msg.replace(/{grupo}/g, member.guild.name).replace(/{user}/g, member).replace(/{nick}/g, member.user.tag).replace(/{count}/g, member.guild.memberCount);
 

@@ -205,7 +205,6 @@ module.exports.run = async({client, message, args, user, server, docDB}) => {
             if (name === 'rico') {
                 
                 if (membroDB.emblemas.find(emblema => emblema.type === 'rico')) return message.channel.send(`**${emj} | O emblema citado já foi removido do perfil do usuário.**`)
-    
                 const emblema = membroDB.emblemas.find(emblema.type === 'rico')
                 membroDB.emblemas.splice(emblema, 1)
 
@@ -216,8 +215,6 @@ module.exports.run = async({client, message, args, user, server, docDB}) => {
 
             if (name === 'dono') {
                 
-                emblema.type === 'dono'
-    
                 if (membroDB.emblemas.find(emblema => emblema.type === 'dono')) return message.channel.send(`**${emj} | O emblema citado já foi removido do perfil do usuário.**`)
                 membroDB.emblemas.splice(emblema, 1)
 
