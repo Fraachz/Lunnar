@@ -73,7 +73,7 @@ module.exports.run = async({message, args, user, server}) => {
 
         server.save();
 
-            return message.channel.send(`**${emj2} | O canal de saída foi setado (${canal}), agora a mensagem setada será enviada no mesmo.**`);
+            return message.channel.send(`**${emj2} | O canal de entrada foi setado (${canal}), agora a mensagem setada será enviada no mesmo.**`);
 
     }
 
