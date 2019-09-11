@@ -4,12 +4,13 @@ const { docDB } = require('../index.js')
 
 module.exports = async (client, member) => {
 
-    let server = await docDB({ type: 2, content: member.guild });
+    let server = await docDB({type: 2, content: member.guild});
 
     let msg = server.welcomeMsg;
-    let canal = member.guild.channels.get(server.exitCanal);
-
     let role = member.guild.roles.get(server.welcomeRole);
+    if (!role) return;
+    let canal = member.guild.channels.get(server.welcomeCanal);
+    if (!canal) return
 
     let embeddd = server.welcomeEmbed;
 
@@ -17,22 +18,20 @@ module.exports = async (client, member) => {
 
     let embed = new Discord.RichEmbed()
 
-        .setDescription(msg)
-        .setThumbnail(member.user.avatarURL)
-        .setColor('#FF0000')
-        .setFooter(`Lunnar © Todos Direitos Reservados`);
+    .setDescription(msg)
+    .setThumbnail(member.user.avatarURL)
+    .setColor('#32FF00')
+    .setFooter(`Lunnar © Todos Direitos Reservados`);
 
-    if (embeddd) {
+    if(embeddd) {
 
-        if (canal) canal.send(embed);
-
+        canal.send(embed);
+        
     } else {
 
-        if (canal) canal.send(msg);
-
+        canal.send(msg);
+    
     }
 
-    if (server.Roles = true) {
-        member.addRole(role)
-    }
+    member.addRole(role);
 }
