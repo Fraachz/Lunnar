@@ -100,16 +100,40 @@ const Guild = new Schema({
         type: Boolean,
         default: false
     },
-    
+
+    logsOn: {
+        type: String
+    },
+
     captcha: {
         type: Boolean,
         default: false
     },
 
+    captchaOn: {
+        type: Boolean,
+        default: false
+    },
+
+    captchaRole: {
+        type: String
+    },
+   
+    captchaCanal: {
+        type: String
+    },
+
     logs: {
         type: Boolean,
         default: false
+    },
 
+    logsOn: {
+        type: String
+    },
+   
+    logsCanal: {
+        type: String
     },
 
     sobre: {

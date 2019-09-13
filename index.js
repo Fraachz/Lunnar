@@ -185,6 +185,8 @@ client.on('message', async msg => {
 
         }
 
+        if (server.)
+
 
         let commandFile = client.commands.get(cmd.slice(server.prefix.length)) || client.commands.get(client.aliases.get(cmd.slice(server.prefix.length)))
         if(commandFile) commandFile.run({client, message, args, user, server, docDB})
