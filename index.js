@@ -185,7 +185,11 @@ client.on('message', async msg => {
 
         }
 
-        if (server.)
+        if (server.invite) {
+
+            return message.channel.send(server.inviteMSG)
+
+        }
 
 
         let commandFile = client.commands.get(cmd.slice(server.prefix.length)) || client.commands.get(client.aliases.get(cmd.slice(server.prefix.length)))
