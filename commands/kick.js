@@ -14,7 +14,7 @@ module.exports.run = ({message, args, user, server}) => {
     }
 
     var alvo = message.mentions.users.first();
-    if (message.mentions.users.size < 1) return message.channel.send(`**${emj} | Você não mencionou nenhum membro para ser adicionado na minha equipe de donos.**`);
+    if (message.mentions.users.size < 1) return message.channel.send(`**${emj} | Você não mencionou nenhum membro para ser expulso.**`);
     if (!message.guild.member(alvo).kickable) return message.channel.send(`**${emj} | O cargo do membro mencionado, é acima de seu cargo.**`);
     
     var razão = args.slice(1).join(" ");

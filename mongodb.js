@@ -74,11 +74,6 @@ const User = new Schema({
 
     },
 
-    warn: {
-        type: String,
-        default: '0'
-    },
-
     bank: {
         type: Number,
         default: 0
@@ -101,8 +96,14 @@ const Guild = new Schema({
         default: false
     },
 
-    logsOn: {
-        type: String
+    inviteOn: {
+        type: String,
+        default: '**<:off:572142645212872735> **(**`Desativado`**)**'
+    },
+    
+    inviteMsg: {
+        type: String,
+        default: "**<:EMOJI2:615343200151797782> | A mensagem do anti - invite ainda não foi setada.**"
     },
 
     captcha: {
@@ -111,29 +112,18 @@ const Guild = new Schema({
     },
 
     captchaOn: {
-        type: Boolean,
-        default: false
+        type: String,
+        default: '**<:off:572142645212872735> **(**`Desativado`**)**'
     },
 
     captchaRole: {
-        type: String
+        type: String,
+        default: "**<:EMOJI2:615343200151797782> | O cargo do captcha ainda não foi setado.**"
     },
    
     captchaCanal: {
-        type: String
-    },
-
-    logs: {
-        type: Boolean,
-        default: false
-    },
-
-    logsOn: {
-        type: String
-    },
-   
-    logsCanal: {
-        type: String
+        type: String,
+        default: "**<:EMOJI2:615343200151797782> | O canal do captcha ainda não foi setado.**"
     },
 
     sobre: {
@@ -153,7 +143,8 @@ const Guild = new Schema({
     },
 
     welcomeOn: {
-        type: String
+        type: String,
+        default: '**<:off:572142645212872735> **(**`Desativado`**)**'
     },
 
     welcomeMsg: {
@@ -182,7 +173,8 @@ const Guild = new Schema({
     },
 
     exitOn: {
-        type: String
+        type: String,
+        default: '**<:off:572142645212872735> **(**`Desativado`**)**'
     },
 
     exitMsg: {

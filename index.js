@@ -187,8 +187,19 @@ client.on('message', async msg => {
 
         if (server.invite) {
 
-            return message.channel.send(server.inviteMSG)
-
+                let invblock = ["discord.gg", "discord.me", "disc0rd.gg", "d1sc0rd.gg", "disc0rd.me", "d1sc0rd.me", "https://", "http://"]; // Array com as mensagens bloqueadas
+                  let contem = false;
+                  for (var i in invblock) {
+                      if (message.content.toLowerCase().includes(invblock[i].toLowerCase())) contem = true; // Verifica se um dos itens do array está incluído na mensagem(ignora caixa alta e baixa)
+                }
+                
+                  if(contem) {
+                      message.delete(5000); // Deleta a mensagem em 5 seg
+                
+                            return message.channel.send(server.inviteMSG).then(msg => msg.delete(10000));
+                                 
+            }
+            
         }
 
 
