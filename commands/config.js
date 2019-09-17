@@ -14,7 +14,7 @@ module.exports.run = async({message, user, server}) => {
     welcome = server.welcomeOn;
     exit = server.exitOn;
     invite = server.inviteOn;
-    logs = server.levelsOn;
+    logs = server.levelOn;
     flood = server.floodOn;
     captcha = server.captchaOn;
 
@@ -37,8 +37,8 @@ module.exports.run = async({message, user, server}) => {
     **${emj4} | Exit**
     ${exit}
     
-    **${emj5} | Anti - Invite
-    ${invite}**
+    **${emj5} | Anti - Invite**
+    ${invite}
     
     **${emj6} | Levels**
     ${logs}

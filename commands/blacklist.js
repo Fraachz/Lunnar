@@ -26,18 +26,24 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
     if (args[0] == 'add') {
 
         let membro = message.mentions.users.first();
+        let membroDB = await docDB({type: 1, content: membro})
+
         if (!membro) {
             return message.channel.send(`**${emj} | Cite algum membro para que eu possa seta-lo na lista negra!**`)
         }
 
-        let membroDB = await docDB({type: 1, content: membro})
+        if (user.blacklist) {
+            return message.channel.send(``)
+        }
 
         membroDB.blacklist = true
-        
+        membroDB.doador = false;
+
         membroDB.xp = 0
         membroDB.level = 0
         membroDB.coins = 0
         membroDB.bank = 0
+        membroDB.doadorTime = 0;
         
         membroDB.save()
 
@@ -52,14 +58,20 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
             return message.channel.send(`**${emj} | Cite algum membro para que eu possa remove-lo da lista negra!**`)
         }
 
+        if (!user.blacklist) {
+            return message.channel.send(``)
+        }
+
         let membroDB = await docDB({type: 1, content: membro})
         
         membroDB.blacklist = false
+        membroDB.doador = false;
 
         membroDB.xp = 0
         membroDB.level = 0
         membroDB.coins = 0
         membroDB.bank = 0
+        membroDB.doadorTime = 0;
 
         membroDB.save()
 

@@ -22,7 +22,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
     }
 
     if (args === undefined || args.length === 0) {
-            message.channel.send(`**${emj} | Comando errado, use: "${prefix}doadores <add:remove>".**`);
+            message.channel.send(`**${emj} | Comando errado, use: "${prefix}doador <add:remove>".**`);
             return;
     }
 
@@ -38,22 +38,22 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
             return message.channel.send(`**${emj} | O membro citado já é um doador!**`)
         }
 
-        if(!args[1]) {
+        if(!args[2]) {
             return message.channel.send(`**${emj} | Você não informou um tempo exato.**`)
         }
 
-        if(args[1] && ms(args[1]) === undefined) {
+        if(args[2] && ms(args[2]) === undefined) {
             return message.channel.send(`**${emj} | O tempo citado no momento, é invalído!**`)
         }
 
-        let time = parseInt(ms(args[1]))
-        let timeStr = moment(Date.now() + time).format('D [d], H [h], m [m], s [s]')
+        let time = parseInt(ms(args.slice(2).join(' ')))
+        let timeStr = moment(Date.now() + time).format('llll')
 
         membroDB.doador = true;
         membroDB.doadorTime = Date.now() + time
         membroDB.save()
 
-        return message.channel.send(`**${emj2} | O ${membro} virou um doador, tempo restante: ${timeStr}**`)
+        return message.channel.send(`**${emj2} | O ${membro} virou um doador, acaba em: ${timeStr}**`)
     } 
 
     if (args[0] == 'remove') {
@@ -64,7 +64,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
             return message.channel.send(`**${emj} | Você não mencionou nenhum membro para ser adicionado na minha lista de doadores.**`);        
         }
 
-        if(membroDB.doador) {
+        if(!membroDB.doador) {
             return message.channel.send(`**${emj} | O membro citado não é um doador!**`)
         }
 

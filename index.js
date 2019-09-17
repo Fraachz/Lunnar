@@ -1,3 +1,5 @@
+console.log('[BOT] Ligando...')
+
 const Discord = require('discord.js');
 const config = require('./config.json');
 const database = require('./mongodb.js');
@@ -152,10 +154,35 @@ client.on('ready', () => {
 
         let randomStatus = status[Math.floor(Math.random() * status.length)];
         client.user.setPresence({game: randomStatus});
+  
     }
   
     setStatus();
     setInterval(() => setStatus(), 20000); //{1000/1s}\{10000/10s}\{100000/1m}
+
+    setInterval(async() => {
+        
+        const usersDB = await database.Users.find({'doador': true})
+        
+        if(usersDB.length === 0) return;
+        
+        const toRemove = usersDB.filter(user => user.doadorTime <= Date.now())
+        
+        if(toRemove.length === 0) return;
+        toRemove.forEach(async userDB => {
+            
+            userDB.doador = false;
+            userDB.doadorTime = 0;
+
+            userDB.save()
+
+            if(client.users.get(userDB._id)) {
+                
+                let user = await client.users.get(userDB._id)
+                user.send('você não é mais doador, doa mais ae')
+            }
+        })
+    }, (5 * 60) * 1000)
     
 });
 
@@ -164,16 +191,34 @@ client.on('message', async msg => {
     let message = msg
 
     if(msg.channel.type === 'dm' || msg.author.bot) return;
+
+        let user = await docDB({type: 1, content: msg.author})
+        let server = await docDB({type: 2, content: msg.guild})
+
+    if (server.invite) {
+
+        let invitesType = ['discord.gg/', 'discordapp.com/invite/', 'discord.me/']
+            
+        let invitesServer = await message.guild.fetchInvites()
+        if(invitesType.some(type => message.content.includes(type)) && !invitesServer.some(invite => message.content.includes(invite)) && !message.member.hasPermission('ADMINISTRATOR') && !user.dono) {
+                
+            let inviteMsg = server.inviteMsg.replace(/{grupo}/g, message.guild.name).replace(/{user}/g, message.author).replace(/{nick}/g, message.author.tag);
+
+            message.delete(100).catch(e => {})
+                
+            message.channel.send(inviteMsg).then(msg => msg.delete(7000))
+        }
+            
+    }
+
         
         let messageArray = msg.content.split(' ')
         let cmd = messageArray[0]
         let args = messageArray.slice(1)
-        let user = await docDB({type: 1, content: msg.author})
-        let server = await docDB({type: 2, content: msg.guild})
         if(!msg.content.startsWith(server.prefix)) return;
 
         let command = await docDB({type: 3, content: cmd.slice(server.prefix.length)});
-        if (command.manu && !user.owner) {
+        if (command.manu && !user.dono && !user.developer) {
         
             return message.channel.send(`**<:error:561979426435497986> | Desculpe-me, mas o comando executado está em manutenção preventiva.**`)
 
@@ -184,24 +229,6 @@ client.on('message', async msg => {
             return message.channel.send(`**<:error:561979426435497986> | Desculpe-me, mas você está na minha lista negra, sendo assim, impossibilitando você de executar comandos.**`)
 
         }
-
-        if (server.invite) {
-
-                let invblock = ["discord.gg", "discord.me", "disc0rd.gg", "d1sc0rd.gg", "disc0rd.me", "d1sc0rd.me", "https://", "http://"]; // Array com as mensagens bloqueadas
-                  let contem = false;
-                  for (var i in invblock) {
-                      if (message.content.toLowerCase().includes(invblock[i].toLowerCase())) contem = true; // Verifica se um dos itens do array está incluído na mensagem(ignora caixa alta e baixa)
-                }
-                
-                  if(contem) {
-                      message.delete(5000); // Deleta a mensagem em 5 seg
-                
-                            return message.channel.send(server.inviteMSG).then(msg => msg.delete(10000));
-                                 
-            }
-            
-        }
-
 
         let commandFile = client.commands.get(cmd.slice(server.prefix.length)) || client.commands.get(client.aliases.get(cmd.slice(server.prefix.length)))
         if(commandFile) commandFile.run({client, message, args, user, server, docDB})

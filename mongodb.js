@@ -111,6 +111,36 @@ const Guild = new Schema({
         default: "**<:EMOJI2:615343200151797782> | A mensagem do anti - invite ainda não foi setada.**"
     },
 
+    flood: {
+        type: Boolean,
+        default: false
+    },
+
+    floodOn: {
+        type: String,
+        default: '**<:off:572142645212872735> **(**`Desativado`**)**'
+    },
+    
+    floodMsg: {
+        type: String,
+        default: "**<:EMOJI2:615343200151797782> | A mensagem do anti - flood ainda não foi setada.**"
+    },
+
+    level: {
+        type: Boolean,
+        default: false
+    },
+
+    levelOn: {
+        type: String,
+        default: '**<:off:572142645212872735> **(**`Desativado`**)**'
+    },
+    
+    levelCanal: {
+        type: String,
+        default: "**<:EMOJI2:615343200151797782> | O canal de levels ainda não foi setada.**"
+    },
+
     captcha: {
         type: Boolean,
         default: false

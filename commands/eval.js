@@ -15,7 +15,7 @@ function clean(text) {
   try {
 
       var code = args.slice(0).join(' ')
-      var evaled = eval(code);
+      var evaled = await eval(code);
       
   if(!code) {
 
