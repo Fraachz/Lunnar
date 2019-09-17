@@ -11,7 +11,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
     let prefix = server.prefix;
 
         if (args === undefined || args.length === 0) {
-        message.channel.send(`**${emj} | Comando errado, use: "${prefix}trabalho <proposta : sair : saldo : marcarponto : info>".**`);
+        message.channel.send(`**${emj} | Comando errado, use: "${prefix}trabalho <proposta : sair : saldo : marcarponto : empresas : info>".**`);
         return;
     }
 
@@ -28,6 +28,10 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
     }
 
     if (args[0] === 'marcarponto') {
+        
+    }
+
+    if (args[0] === 'empresas') {
         
     }
 

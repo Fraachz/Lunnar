@@ -61,6 +61,11 @@ const User = new Schema({
         default: false
     },
     
+    doadorTime: {
+        type: Number,
+        default: 0
+    },
+    
     emblemas: Array,
 
     staff: {

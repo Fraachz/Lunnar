@@ -19,12 +19,12 @@ module.exports.run = async({client, message, server}) => {
     let rodape = 'Lunnar © Todos Direitos Reservados'
     let prefix = server.prefix;
 
-    message.channel.send(message.author)
+    message.reply()
 
     let embed = new Discord.RichEmbed()
 
     .setTitle(`**${emj} | AJUDA**`)
-    .setDescription('**Olá, tudo bem? Espero que sim! Aqui está todas minhas informações. Caso não saiba, fui criada pelo EduardoDev#0001, em JavaScript.**\n\n**<:code:570987560193753088> | Comandos de staffs**\n\n**<:info:577816535343562752> | Administração**\n**<:EMOJI12:619619672920162304> | Economia**\n**<a:MinecraftGif:562396962523971595> | Diversão**\n**<:EMOJI16:619883429533712395> | Menu**\n\n**<:cancelar:562000200650981379> | Fechar**\n\n**Para ver mais sobre algum comando, reaja abaixo.**')
+    .setDescription('**Olá, tudo bem? Espero que sim! Aqui está todas minhas informações. Caso não saiba, fui criada pelo Fraachz_#0001, em JavaScript.**\n\n**<:code:570987560193753088> | Comandos de staffs**\n\n**<:info:577816535343562752> | Administração**\n**<:EMOJI12:619619672920162304> | Economia**\n**<a:MinecraftGif:562396962523971595> | Diversão**\n**<:EMOJI16:619883429533712395> | Menu**\n\n**<:cancelar:562000200650981379> | Fechar**\n\n**Para ver mais sobre algum comando, reaja abaixo.**')
     .setThumbnail(client.user.avatarURL)
     .setColor(`#00B6FF`)
     .setFooter(rodape)
@@ -112,7 +112,7 @@ module.exports.run = async({client, message, server}) => {
             r.remove(r.users.last().id).catch(e => {})
             
             embed.setTitle(`**${emj} | AJUDA**`)
-            embed.setDescription('**Olá, tudo bem? Espero que sim! Aqui está todas minhas informações. Caso não saiba, fui criada pelo EduardoDev#0001, em JavaScript.**\n\n**<:code:570987560193753088> | Comandos de staffs**\n\n**<:info:577816535343562752> | Administração**\n**<:EMOJI12:619619672920162304> | Economia**\n**<a:MinecraftGif:562396962523971595> | Diversão**\n**<:EMOJI16:619883429533712395> | Menu**\n\n**<:cancelar:562000200650981379> | Fechar**\n\n**Para ver mais sobre algum comando, reaja abaixo.**')
+            embed.setDescription('**Olá, tudo bem? Espero que sim! Aqui está todas minhas informações. Caso não saiba, fui criada pelo Fraachz_#0001, em JavaScript.**\n\n**<:code:570987560193753088> | Comandos de staffs**\n\n**<:info:577816535343562752> | Administração**\n**<:EMOJI12:619619672920162304> | Economia**\n**<a:MinecraftGif:562396962523971595> | Diversão**\n**<:EMOJI16:619883429533712395> | Menu**\n\n**<:cancelar:562000200650981379> | Fechar**\n\n**Para ver mais sobre algum comando, reaja abaixo.**')
             embed.setThumbnail(client.user.avatarURL)
             embed.setColor(`#00B6FF`)
             embed.setFooter(rodape)
