@@ -47,7 +47,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
         }
 
         let time = parseInt(ms(args.slice(2).join(' ')))
-        let timeStr = moment(Date.now() + time).format('llll')
+        let timeStr = moment(Date.now() + time).format('LLLL')
 
         membroDB.doador = true;
         membroDB.doadorTime = Date.now() + time

@@ -78,6 +78,8 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
                 
                 user.empresa = true
                 user.empresaName = empresa._id
+                user.coins -= price;
+
                 user.save()
 
                 message.channel.send(emj2 + '** | A sua empresa foi aberta, para fecha-la, use: `'+ prefix +'empresa deletar`**')
@@ -97,6 +99,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
     }
 
     if (args[0] === 'deletar') {
+
         if(!user.empresa) {
             return message.channel.send(`**${emj} | Você não está em nenhuma empresa no momento.**`);
         }
@@ -253,7 +256,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
             return message.channel.send(`**${emj} | O membro mencionado não faz parte de sua empresa.**`)
         }
 
-        let msgConfirm = await message.channel.send(`**${emj} | Você deseja mesmo demitir este usuário e leva-lo a falência?**`)
+        let msgConfirm = await message.channel.send(`**${emj4} | Você deseja mesmo demitir este usuário e leva-lo a falência?**`)
 
         await msgConfirm.react('615343178433822756')
         await msgConfirm.react('615343200151797782')
@@ -344,51 +347,75 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
 
         if(empresa.coins > parseInt(pagamento*total)) {
             restante += parseInt(empresa.coins - pagamento*total)
+        } else {
+            restante = empresa.coins
         }
 
         let esperando = await message.channel.send(`**${emj5} | Aguarde, estou fazendo o pagamento dos usuários.**`)
 
-        let gerentesLength = empresa.gerentes.length
-        let gerentesNum = 1
-        let funcionariosLength = empresa.funcionarios.length
-        let funcionariosNum = 1
+        const gerentesLength = empresa.gerentes.length
+        const funcionariosLength = empresa.funcionarios.length
 
         empresa.lastPayment = Date.now()
 
-        funcionarios.forEach(async funcionario => {
+        const getResult = async () => {
+            user.bank += restante
+
+            user.save()
+            await esperando.edit(`**${emj6} | O pagamento foi realizado, valor pago para os funcionários da empresa: ${Number(empresa.coins - restante).toLocaleString()} reais. E também, enviamos ${Number(restante).toLocaleString()} reais para o dono da empresa.**`)
+
+            empresa.coins = 0
+            empresa.save()
+        }
+
+        const gerentesCheck = async (pagamentoPorDia) => {
+            if(gerentesLength === 0) {
+                await getResult()
+            }
+            for(var j = 0; i < gerentesLength; j++) {
+            
+                let funcionario = empresa.gerentes[j];
+                let userDB = await docDB({type: 1, content: {id: funcionario}})
+                let payment = parseInt(userDB.workedDays * pagamentoPorDia)
+                console.log(userDB)
+                userDB.coins += payment
+                restante -= parseInt(payment)
+                userDB.workedDays = 0
+    
+                userDB.save()
+    
+                if(j === (gerentesLength - 1)) {
+                    await getResult()
+                }
+            }
+        }
+
+        if(funcionariosLength === 0) {
+            if(gerentesLength !== 0) {
+                await gerentesCheck(pagamentoPorDia)
+            } else {
+                return await getResult()
+            }
+        }
+
+        for(var i = 0; i < funcionariosLength; i++) {
+            
+            let funcionario = empresa.funcionarios[i];
             let userDB = await docDB({type: 1, content: {id: funcionario}})
+            console.log(userDB)
             let payment = parseInt(userDB.workedDays * pagamentoPorDia)
 
             userDB.coins += payment
-            restante += parseInt(pagamento - payment)
+            restante -= parseInt(payment)
             userDB.workedDays = 0
 
             userDB.save()
 
-            funcionariosNum += 1
-
-            if(funcionariosNum === funcionariosLength) {
-                funcionarios.forEach(async gerente => {
-                    let gerenteDB = await docDB({type: 1, content: {id: gerente}})
-                    let payment = parseInt(gerenteDB.workedDays * pagamentoPorDia)
-        
-                    gerenteDB.coins += payment
-                    restante += parseInt(pagamento - payment)
-                    gerenteDB.workedDays = 0
-
-                    gerenteDB.save()
-        
-                    gerentesNum += 1
-
-                    if(gerentesNum === gerentesLength) {
-                        user.coins += restante + pagamento
-
-                        user.save()
-                        await esperando.edit(`**${emj6} | O pagamento foi realizado, valor pago: ${pagamento - restante}. Seu pagamento, foi pago também, valor: ${restante + pagamento}**`)
-                    }
-                })
+            if(i === (funcionariosLength - 1)) {
+                await gerentesCheck(pagamentoPorDia)
             }
-        })
+
+        }
 
     }
 
@@ -478,6 +505,37 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
     }
 
     if (args[0] === 'info') {
+
+        if(!user.empresa) {
+            return message.channel.send(`**${emj} | Você não está em nenhuma empresa no momento.**`)
+        }
+
+        let empresa = await docDB({type: 4, content: user.empresaName})
+
+        let name = empresa._id
+        let tagname = empresa.tag
+        let owner = client.users.get(empresa.dono).tag
+        let totalfunc = empresa.funcionarios.length
+        let totalgen = empresa.gerentes.length
+        let rend = empresa.coins
+        let valor_emp = empresa.coins + (empresa.funcionarios.length * 1200) + (empresa.gerentes.length * 1400)
+
+        let info = new Discord.RichEmbed()
+
+        .setDescription(`**<a:EMOJI35:621494395107147796> | Informações de sua Empresa:
+        
+        <:EMOJI29:620813196575375360> | Nome da empresa: ${name}
+        <:EMOJI29:620813196575375360> | Tag da empresa: ${tagname}
+        <:EMOJI29:620813196575375360> | Dono da empresa: ${owner}
+        
+        <:suporte:564141197388546068> | Quantidade de funcionários: ${totalfunc}
+        <:suporte:564141197388546068> | Quantidade de gerentes: ${totalgen}
+        
+        <:EMOJI12:619619672920162304> | Rendimento atual da empresa: ${rend}
+        <:EMOJI12:619619672920162304> | Valor atual da empresa: ${Number(valor_emp).toLocaleString()}**`)
+        .setFooter(`Lunnar © Todos Direitos Reservados`)
+
+        message.channel.send(info)
 
     }
 }

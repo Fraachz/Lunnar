@@ -179,15 +179,17 @@ client.on('ready', () => {
             if(client.users.get(userDB._id)) {
                 
                 let user = await client.users.get(userDB._id)
-                user.send('você não é mais doador, doa mais ae')
+                user.send(`**<:error:561979426435497986> | Desculpe-me, mas seu tempo de doador terminou! Para adquirir novamente chame o Fraachz_#0001 no privado.**`)
             }
         })
     }, (5 * 60) * 1000)
     
 });
 
+
+
 client.on('message', async msg => {
-  
+    
     let message = msg
 
     if(msg.channel.type === 'dm' || msg.author.bot) return;
@@ -211,6 +213,31 @@ client.on('message', async msg => {
             
     }
 
+
+    
+    if(msg.content.includes(`<@${client.user.id}>`)) {
+    
+        let prefix = server.prefix;
+
+        let embed = new Discord.RichEmbed()
+    
+            .setDescription(`
+
+            **🧾 | Meu prefix:**
+            **🧾 | "${prefix}"**
+
+            **🧭 | Para qualquer dúvida use:** 
+            **🧭 | "${prefix}ajuda"**
+
+            **⚙️ | Bot feito por:**
+            **⚙️ | ${client.users.get(`446857017429196810`).tag}**
+            `)
+            .setTimestamp(new(Date))
+            .setColor("#2E9AFE")
+            .setFooter(`Lunnar © Todos Direitos Reservados`)
+    
+            msg.channel.send(embed)
+        }
         
         let messageArray = msg.content.split(' ')
         let cmd = messageArray[0]

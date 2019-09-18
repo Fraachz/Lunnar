@@ -17,6 +17,8 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
 
     if (args[0] === 'proposta') {
 
+        
+
     }
 
     if (args[0] === 'sair') {

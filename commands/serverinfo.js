@@ -41,7 +41,6 @@ module.exports.run = async({client, message, args, user, server}) => {
         **${emj9} | Cargos:** ${message.guild.roles.map(a => a).join(",  ") && message.guild.roles.filter((role) => role.name !== '@everyone').map((role) => role.toString())}
         
         **${emj10} | Sobre do Servidor:** 
-        
         ${sobre}`)
         .setThumbnail(message.guild.iconURL)
         .setColor("#FF0000")

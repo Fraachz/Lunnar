@@ -35,7 +35,7 @@ module.exports.run = async ({message, args, user, server}) => {
 
     if (args[0] === 'dellsobre') {
 
-        server.sobre = '**<:EMOJI2:615343200151797782> | O servidor não possui um sobre. (Use l!!servidor para setar o sobre.)**';
+        server.sobre = '**<:EMOJI2:615343200151797782> | O servidor não possui um sobre. (Use '+ prefix +'servidor para setar o sobre.)**';
         server.save();
 
         return message.channel.send(`**${emj2} | O sobre do servidor foi deletado e alterado para o padrão.**`)
