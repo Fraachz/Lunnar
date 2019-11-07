@@ -8,8 +8,8 @@ module.exports.run = async({message}) => {
 
     let embed = new Discord.RichEmbed()
 
-    .setDescription(`**Download: [[Clique Aqui]](${membro.displayAvatarURL}).**`)
-    .setImage(membro.displayAvatarURL)
+    .setDescription(`**Download: [[Clique Aqui]](${message.guild.iconURL}).**`)
+    .setImage(message.guild.iconURL)
     .setFooter(`Lunnar © Todos Direitos Reservados`)
 
     message.channel.send(embed)
@@ -17,5 +17,5 @@ module.exports.run = async({message}) => {
 }
 
 module.exports.help = {
-    name: 'avatar'
+    name: 'servericon'
 }

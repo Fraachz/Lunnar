@@ -1,13 +1,13 @@
 const Discord = require("discord.js");
 
-module.exports.run = async ({message, args}) => {
+module.exports.run = async ({message, args, user}) => {
     
     message.delete().catch(e => {})
 
     let emj = '<:EMOJI2:615343200151797782>';
     let emj2 = '<:EMOJI:615343178433822756>';
 
-    if (!message.member.hasPermission('MANAGE_CHANNELS')) {
+    if (!user.dono && !user.staff && !user.developer && !message.member.hasPermission('MANAGE_CHANNELS')) {
         return message.channel.send(emj + ' **| Você não possui a permissão `MANAGE_CHANNELS`.**');
     }
 
@@ -25,7 +25,7 @@ module.exports.run = async ({message, args}) => {
 
     if (args[0] > 100) { 
         return message.channel.send(`**${emj} | Eu não posso apagar mais que [100] mensagens.**`);
-    }
+    }   
 
     message.channel.bulkDelete(args[0]).then(() => {
 

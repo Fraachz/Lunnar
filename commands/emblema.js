@@ -112,7 +112,7 @@ module.exports.run = async({client, message, args, user, server, docDB}) => {
 
                 membroDB.save()
 
-                return message.channel.send(`**${emj2} | O emblema escolhido foi:** developer (${emj8}).`);
+                return message.channel.send(`**${emj2} | O emblema escolhido foi:** rico (${emj8}).`);
             }
 
             if (name === 'dono') {

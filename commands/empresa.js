@@ -13,6 +13,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
     let emj4 = '<:nocorrect:572142881280753674>';
     let emj5 = '<a:carregando:536319256384765972>';
     let emj6 = '<a:moneyflying:564141188362272768>';
+    let emj7 = '<:yescorrect:577816535943479296>';
 
     let prefix = server.prefix;
 
@@ -190,7 +191,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
             let embedUser = new Discord.RichEmbed()
 
             .setTitle('Contrato')
-            .setDescription(`você foi chamado pra empresa ${empresa._id}\n**[Clique Aqui](${msg.url})** para ir até o **contrato**`)
+            .setDescription(`Você foi chamado pra empresa ${empresa._id}\n**[Clique Aqui](${msg.url})** para ir até o **contrato**`)
 
             membro.send(embedUser)
 
@@ -207,14 +208,14 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
                         empresa.save()
 
                         msg.delete().catch(e => {})
-                        message.channel.send('usuario contratado')
+                        message.channel.send('**' + emj7 +' | A proposta de emprego foi aceita!**')
 
                         await collector.stop()
 
                         break;
                     case '615343200151797782':
 
-                    message.channel.send('Proposta recusada!')
+                    message.channel.send('**' + emj4 +' | A proposta de emprego foi recusada!**')
 
                         await collector.stop()
                         break;
@@ -461,7 +462,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
         await empresa.save()
 
         message.channel.send(`**${emj2} | O membro mencionado foi promovido a gerente de sua empresa.**`)
-        return membro.send(`**${emj2} | Olá, desculpe-me o incomodo, queria avisa-lo que você foi promovido a gerente em seu trabalho. \n\nAtenciosamente: ${empresa._id}**`)
+        return membro.send(`**${emj2} | Olá, desculpe-me o incomodo, queria avisa-lo que você foi promovido a gerente em seu trabalho.\nEmpresa: ${empresa._id}**`)
     }
 
     if (args[0] === 'rebaixar') {
@@ -500,7 +501,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
         await empresa.save()
 
         message.channel.send(`**${emj2} | O membro mencionado foi rebaixado a funcionário de sua empresa.**`)
-        return membro.send(`**${emj2} | Olá, desculpe-me o incomodo, queria avisa-lo que você foi rebaixado a funcionário em seu trabalho. \n\nAtenciosamente: ${empresa._id}**`)
+        return membro.send(`**${emj2} | Olá, desculpe-me o incomodo, queria avisa-lo que você foi rebaixado a funcionário em seu trabalho.\nEmpresa: ${empresa._id}**`)
 
     }
 
@@ -528,8 +529,8 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
         <:EMOJI29:620813196575375360> | Tag da empresa: ${tagname}
         <:EMOJI29:620813196575375360> | Dono da empresa: ${owner}
         
-        <:suporte:564141197388546068> | Quantidade de funcionários: ${totalfunc}
         <:suporte:564141197388546068> | Quantidade de gerentes: ${totalgen}
+        <:suporte:564141197388546068> | Quantidade de funcionários: ${totalfunc}
         
         <:EMOJI12:619619672920162304> | Rendimento atual da empresa: ${rend}
         <:EMOJI12:619619672920162304> | Valor atual da empresa: ${Number(valor_emp).toLocaleString()}**`)

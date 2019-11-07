@@ -13,7 +13,7 @@ module.exports.run = ({message, args, user, server}) => {
         return message.channel.send(emj + '** | Você não possui a permissão `BAN_MEMBERS` para executar este comando.**');
     }
 
-    var alvo = message.mentions.users.first();
+    var alvo = message.mentions.users.first() || client.users.get(args[1]);
     if (message.mentions.users.size < 1) return message.channel.send(`**${emj} | Você não mencionou nenhum membro para ser banido.**`);
     if (!message.guild.member(alvo).bannable) return message.channel.send(`**${emj} | O cargo do membro mencionado, é acima de seu cargo.**`);
     

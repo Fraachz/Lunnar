@@ -28,7 +28,7 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
 
     if (args[0] == 'add') {
 
-        let membro = message.mentions.users.first();
+        let membro = message.mentions.users.first() || client.users.get(args[1]);
         let membroDB = await docDB({type: 1, content: membro})
         if (!membro) {
             return message.channel.send(`**${emj} | Você não mencionou nenhum membro para ser adicionado na minha lista de doadores.**`);
@@ -53,7 +53,26 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
         membroDB.doadorTime = Date.now() + time
         membroDB.save()
 
-        return message.channel.send(`**${emj2} | O ${membro} virou um doador, acaba em: ${timeStr}**`)
+        message.channel.send(`**${emj2} | O ${membro} virou um doador, acaba em: ${timeStr}**`)
+
+        let canal = client.channels.get('633782300030795777');
+        if (client.guilds.get("633489586668175391").member(membroDB)) {
+            message.guild.members.get(message.author.id).addRole("633782280904769563");
+        }
+
+        let embed = new Discord.RichEmbed()
+
+        .setDescription('**<:EMOJI12:619619672920162304> EBAAA!! O ' + membro.tag + ' acabou de me doar <:EMOJI28:620415677383049221>\n\n<a:EMOJI47:626937935715106826> E por isso, meu novo doador ganhou uma tag especial até: `' + timeStr + '` <:EMOJI20:620044911546335234>\n\nReaja abaixo para agradecer o mesmo!**')
+        .setColor(`RANDOM`)
+        .setFooter(`Lunnar © Todos Direitos Reservados`)
+
+        canal.send(embed).then(async msg => {
+
+            msg.react('620415677383049221');
+
+        });
+            membro.addRole(role);
+
     } 
 
     if (args[0] == 'remove') {
@@ -72,7 +91,13 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
         membroDB.doadorTime = 0
         membroDB.save();
 
-        return message.channel.send(`**${emj2} | O ${membro}, foi removido da minha lista de doadores.**`);
+        message.channel.send(`**${emj2} | O ${membro}, foi removido da minha lista de doadores.**`);
+    
+        let role = client.guilds.get('609921485917782036').roles.get('609921485917782036');
+        
+        if (role) {
+        membro.removeRole(role);
+        }
     }
     
 }

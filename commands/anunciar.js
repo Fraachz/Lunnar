@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-module.exports.run = async ({message, args}) => {
+module.exports.run = async ({message, args, user}) => {
 
     message.delete().catch(e => {})
 
@@ -18,14 +18,13 @@ module.exports.run = async ({message, args}) => {
      return message.channel.send(`**${emj} | Insira uma mensagem para que eu possa anuncia-la.**`);
     }
 
+    message.channel.send('@everyone')
     let embed = new Discord.RichEmbed()
 
-    .setDescription(MSG)
+    .setDescription(`${MSG}`)
     .setFooter(rodape)
 
-    message.channel.send(embed).then(async msg => {
-        return message.channel.send('@everyone')
-    })
+    message.channel.send(embed)
 
 }
 

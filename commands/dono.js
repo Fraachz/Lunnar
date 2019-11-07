@@ -15,7 +15,6 @@ module.exports.run = async ({client, message, args, user, server, docDB}) => {
 
     if (message.author.id !== '446857017429196810') {
         return message.channel.send(emj + '** | Você não possui a permissão `DONO` para executar este comando.**');
-    
     }
 
     if (args === undefined || args.length === 0) {

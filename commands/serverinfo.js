@@ -38,15 +38,14 @@ module.exports.run = async({client, message, args, user, server}) => {
         **${emj7} | Canais de Voz** ${message.guild.channels.filter(a => a.type === "voice").size}
         
         **${emj8} | Quantidade de Cargos:** ${message.guild.roles.size}
-        **${emj9} | Cargos:** ${message.guild.roles.map(a => a).join(",  ") && message.guild.roles.filter((role) => role.name !== '@everyone').map((role) => role.toString())}
-        
-        **${emj10} | Sobre do Servidor:** 
-        ${sobre}`)
+        **${emj10} | Sobre do Servidor:** ${sobre}`)
         .setThumbnail(message.guild.iconURL)
         .setColor("#FF0000")
         .setFooter(`Lunnar © Todos Direitos Reservados`)
 
     message.channel.send(embed);
+
+    //**${emj9} | Cargos:** ${message.guild.roles.map(a => a).join(",  ") && message.guild.roles.filter((role) => role.name !== '@everyone').map((role) => role.toString())}
 
 }
 
