@@ -5,6 +5,7 @@ const config = require('./config.json')
 mongoose.connect(config.database, { useNewUrlParser: true }, (err) => {
   if (err) return console.log('[Banco De Dados] Houve um erro no banco de dados ao fazer conexão com o bot.')
   console.log('[Banco De Dados] O banco de dados foi conectado ao bot.')
+
 })
 
 const User = new Schema({
@@ -82,6 +83,41 @@ const User = new Schema({
     bank: {
         type: Number,
         default: 0
+    },
+
+    vermelho: {
+        type: Boolean,
+        default: false
+    },
+
+    verde: {
+        type: Boolean,
+        default: false
+    },
+
+    vermelho: {
+        type: Boolean,
+        default: false
+    },
+
+    preto: {
+        type: Boolean,
+        default: false
+    },
+
+    branco: {
+        type: Boolean,
+        default: false
+    },
+
+    roxo: {
+        type: Boolean,
+        default: false
+    },
+
+    azul: {
+        type: Boolean,
+        default: false
     }
 
 })
@@ -139,26 +175,6 @@ const Guild = new Schema({
     levelCanal: {
         type: String,
         default: "**<:EMOJI2:615343200151797782> | O canal de levels ainda não foi setada.**"
-    },
-
-    captcha: {
-        type: Boolean,
-        default: false
-    },
-
-    captchaOn: {
-        type: String,
-        default: '**<:off:572142645212872735> **(**`Desativado`**)**'
-    },
-
-    captchaRole: {
-        type: String,
-        default: "**<:EMOJI2:615343200151797782> | O cargo do captcha ainda não foi setado.**"
-    },
-   
-    captchaCanal: {
-        type: String,
-        default: "**<:EMOJI2:615343200151797782> | O canal do captcha ainda não foi setado.**"
     },
 
     sobre: {
@@ -238,7 +254,6 @@ const Command = new Schema({
         type: Boolean,
         default: false
     }
-
 })
 
 
@@ -282,12 +297,32 @@ const Empresa = new Schema({
 
 })
 
+const Exclusivo = new Schema({
+
+    _id: {
+        type: String
+    },
+    
+    comando: {
+        type: Boolean,
+        default: false
+    },
+
+    guildUse: {
+        type: Boolean,
+        default: false
+    },
+    
+})
+
 var Users = mongoose.model('Users', User);
 var Guilds = mongoose.model('Guilds', Guild);
 var Commands = mongoose.model('Commands', Command);
 var Empresas = mongoose.model('Empresas', Empresa);
+var Exclusivos = mongoose.model('Exlusivos', Exclusivo);
 
 exports.Users = Users;
 exports.Guilds = Guilds;
 exports.Commands = Commands;
 exports.Empresas = Empresas;
+exports.Exclusivos = Exclusivos;

@@ -8,7 +8,7 @@
             delayMs=10;
         }
 
-        this.funct=funct;
+        this.funct=faunct;
         var times=times;
         var timesCount=0;
         var ticks = (delayMs/10)|0;

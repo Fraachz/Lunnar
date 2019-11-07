@@ -4,6 +4,10 @@ const Discord = require('discord.js');
 const config = require('./config.json');
 const database = require('./mongodb.js');
 const fs = require('fs');
+const timexp = new Set();
+const mongoose = require('mongoose');
+const moment = require('moment');
+
 const client = new Discord.Client();
 
 client.commands = new Discord.Collection()
@@ -64,6 +68,31 @@ const docDB = async (doc) => {
                 
             }); await empresa.save(); return empresa;
             break;
+
+        case 5:
+
+            const exclusivoCheck = await database.Exclusivos.findOne({'_id': doc.content.id})
+
+            if (exclusivoCheck) return exclusivoCheck;
+
+            const exclusivo = new database.Exclusivos({
+                _id: doc.content.id
+
+            }); await exclusivo.save(); return exclusivo;
+            break;
+
+        case 6:
+
+            const colorCheck = await database.Colors.findOne({'_id': doc.content.id})
+
+            if (colorCheck) return colorCheck;
+
+            const color = new database.Colors({
+                _id: doc.content.id
+
+            }); await color.save(); return color;
+            break;
+
     }
 }
 
@@ -139,16 +168,34 @@ fs.readdir("./events/", (err, files) => {
 
 let status = [
 
-    { name: `Me siga no twitter! @Fraachz_sz [🌠]`, type: 'STREAMING', url: 'https://www.twitch.tv/frachzin_' },
+    { name: `Comandos novinhos somente para meus users <3 [🌠]`, type: 'STREAMING', url: 'https://www.twitch.tv/frachzin_' },
     { name: `Atualizações Diárias [🎈]`, type: 'STREAMING', url: 'https://www.twitch.tv/frachzin_' },
     { name: `Ajude-nos doando para nós! [❤️]`, type: 'STREAMING', url: 'https://www.twitch.tv/frachzin_' },
+    { name: `Hospedado e Atualizado com amor pelo querido Resettão [❤️]`, type: 'STREAMING', url: 'https://www.twitch.tv/frachzin_'},
     { name: `Fui feita com amor e carinho, pelo meus incriveis donos! [🔞]`, type: 'STREAMING', url: 'https://www.twitch.tv/frachzin_' }
 
 ];
 
 client.on('ready', () => {
 
-    console.log( `Estou em ${client.guilds.size} servidores com ${client.users.size} usuarios` );
+    moment.locale('pt-br')
+
+    console.log(`Estou em ${client.guilds.size} servidores com ${client.users.size} usuarios`);
+
+    let canall = client.channels.get('633782312709914634');
+    if (!canall) return;
+
+    mongoose.connect(config.database, { useNewUrlParser: true }, (err) => {
+        if (err) return canall.send('<:EMOJI6:617554601637314561> **| Houve um erro no banco de dados ao fazer conexão com o bot.**')
+
+    canall.send(`<:EMOJI20:620044911546335234> **| Data: ${moment().format("L")}**
+    
+<a:EMOJI42:626937938239946762> **| Lunnar Ligada!**
+
+<:EMOJI58:626937936147120129> **| Total de membros: ${client.users.size}.**
+<:EMOJI16:619883429533712395> **| Total de guilds: ${client.guilds.size}.**
+
+<:EMOJI6:617554601637314561> **| O banco de dados foi conectado ao bot.**`)
 
     function setStatus() {
 
@@ -176,6 +223,10 @@ client.on('ready', () => {
 
             userDB.save()
 
+            if (client.guilds.get("633489586668175391").member(userDB)) {
+                message.guild.members.get(message.author.id).removeRole("633782280904769563");
+            }    
+
             if(client.users.get(userDB._id)) {
                 
                 let user = await client.users.get(userDB._id)
@@ -183,10 +234,9 @@ client.on('ready', () => {
             }
         })
     }, (5 * 60) * 1000)
-    
+   
+    })
 });
-
-
 
 client.on('message', async msg => {
     
@@ -196,6 +246,41 @@ client.on('message', async msg => {
 
         let user = await docDB({type: 1, content: msg.author})
         let server = await docDB({type: 2, content: msg.guild})
+
+            
+        // let emj = '<:EMOJI2:615343200151797782>';
+        // let emj2 = '<:EMOJI:615343178433822756>';
+
+        if(message.channel.id === "633782305454030858") {
+    
+            message.react("626937938239946762");
+            message.react("626937938210586631");
+
+    }
+
+    if (server.flood) {
+
+        await antSpam({ message, map: new Map() })
+
+        function antSpam(options = {}) {
+            if (options.map && !options.message.author.bot) {
+                const getter = options.map.get(options.message.author.id)
+                if (getter === options.message.content) {
+                    options.message.delete()
+
+                    let FloodMsg = server.floodMsg.replace(/{grupo}/g, message.guild.name).replace(/{user}/g, message.author).replace(/{nick}/g, message.author.tag);
+                    
+                    options.message.channel.send(FloodMsg)
+                } else {
+                    options.map.set(options.message.author.id, options.message.content)
+                    setTimeout(() => {
+                        options.map.delete(options.message.author.id)
+                    }, 5000)
+                }
+            }
+        }
+
+    }
 
     if (server.invite) {
 
@@ -222,15 +307,14 @@ client.on('message', async msg => {
         let embed = new Discord.RichEmbed()
     
             .setDescription(`
+**🔨 | Meu prefix:**
+**🔨 | "${prefix}"**
 
-            **🧾 | Meu prefix:**
-            **🧾 | "${prefix}"**
+**🎯 | Para qualquer dúvida use:** 
+**🎯 | "${prefix}ajuda"**
 
-            **🧭 | Para qualquer dúvida use:** 
-            **🧭 | "${prefix}ajuda"**
-
-            **⚙️ | Bot feito por:**
-            **⚙️ | ${client.users.get(`446857017429196810`).tag}**
+**⚙️ | Nosso site:**
+**⚙️ | [Em breve](https://google.com/)**
             `)
             .setTimestamp(new(Date))
             .setColor("#2E9AFE")
