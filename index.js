@@ -80,19 +80,6 @@ const docDB = async (doc) => {
 
             }); await exclusivo.save(); return exclusivo;
             break;
-
-        case 6:
-
-            const colorCheck = await database.Colors.findOne({'_id': doc.content.id})
-
-            if (colorCheck) return colorCheck;
-
-            const color = new database.Colors({
-                _id: doc.content.id
-
-            }); await color.save(); return color;
-            break;
-
     }
 }
 
