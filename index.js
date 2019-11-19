@@ -8,6 +8,9 @@ const timexp = new Set();
 const mongoose = require('mongoose');
 const moment = require('moment');
 
+//Flood Config
+const mappedMessages = new Map() 
+
 const client = new Discord.Client();
 
 client.commands = new Discord.Collection()
@@ -167,7 +170,7 @@ client.on('ready', () => {
 
     moment.locale('pt-br')
 
-    console.log(`Estou em ${client.guilds.size} servidores com ${client.users.size} usuarios`);
+    console.log(`[READY] Estou em ${client.guilds.size} servidores com ${client.users.size} usuarios`);
 
     let canall = client.channels.get('633782312709914634');
     if (!canall) return;
@@ -193,6 +196,8 @@ client.on('ready', () => {
   
     setStatus();
     setInterval(() => setStatus(), 20000); //{1000/1s}\{10000/10s}\{100000/1m}
+    setInterval(() => {client.channels.get('646449592610717707').setName(`『📜│${client.users.size} usuários <3`);}, 500)
+    setInterval(() => {client.channels.get('646450024875687996').setName(`『📜│${client.users.size} servidores <3`);}, 500)
 
     setInterval(async() => {
         
@@ -246,27 +251,7 @@ client.on('message', async msg => {
     }
 
     if (server.flood) {
-
-        await antSpam({ message, map: new Map() })
-
-        function antSpam(options = {}) {
-            if (options.map && !options.message.author.bot) {
-                const getter = options.map.get(options.message.author.id)
-                if (getter === options.message.content) {
-                    options.message.delete()
-
-                    let FloodMsg = server.floodMsg.replace(/{grupo}/g, message.guild.name).replace(/{user}/g, message.author).replace(/{nick}/g, message.author.tag);
-                    
-                    options.message.channel.send(FloodMsg)
-                } else {
-                    options.map.set(options.message.author.id, options.message.content)
-                    setTimeout(() => {
-                        options.map.delete(options.message.author.id)
-                    }, 5000)
-                }
-            }
-        }
-
+        antSpam({ message, map: mappedMessages }, server)
     }
 
     if (server.invite) {
@@ -284,8 +269,6 @@ client.on('message', async msg => {
         }
             
     }
-
-
     
     if(msg.content.includes(`<@${client.user.id}>`)) {
     
@@ -331,5 +314,23 @@ client.on('message', async msg => {
         let commandFile = client.commands.get(cmd.slice(server.prefix.length)) || client.commands.get(client.aliases.get(cmd.slice(server.prefix.length)))
         if(commandFile) commandFile.run({client, message, args, user, server, docDB})
 })
+
+function antSpam(options = {}, server) {
+    if (options.map && !options.message.author.bot) {
+        const getter = options.map.get(options.message.author.id)
+        if (getter === options.message.content) {
+            options.message.delete()
+
+            let FloodMsg = server.floodMsg.replace(/{grupo}/g, options.message.guild.name).replace(/{user}/g, options.message.author).replace(/{nick}/g, options.message.author.tag);
+
+            options.message.channel.send(FloodMsg).then(msg => msg.delete(3000))
+        } else {
+            options.map.set(options.message.author.id, options.message.content)
+            setTimeout(() => {
+                options.map.delete(options.message.author.id)
+            }, 10000)
+        }
+    }
+}
 
 client.login(config.token)
