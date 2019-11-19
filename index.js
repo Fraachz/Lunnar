@@ -196,8 +196,8 @@ client.on('ready', () => {
   
     setStatus();
     setInterval(() => setStatus(), 20000); //{1000/1s}\{10000/10s}\{100000/1m}
-    setInterval(() => {client.channels.get('646449592610717707').setName(`『📜│${client.users.size} usuários <3`);}, 500)
-    setInterval(() => {client.channels.get('646450024875687996').setName(`『📜│${client.users.size} servidores <3`);}, 500)
+    setInterval(() => {client.channels.get('646449592610717707').setName(`『📜│${client.users.size} usuários 💖`);}, 500)
+    setInterval(() => {client.channels.get('646450024875687996').setName(`『📜│${client.guilds.size} servidores 💖`);}, 500)
 
     setInterval(async() => {
         
